@@ -2,33 +2,21 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { TokenService } from './token.service';
 import { CreateTokenDto } from './dto/create-token.dto';
 import { UpdateTokenDto } from './dto/update-token.dto';
+import { ClientProxyMicroservice } from 'src/helper/proxy/client.proxy';
+import { lastValueFrom } from 'rxjs';
 
 @Controller('token')
 export class TokenController {
-  constructor(private readonly tokenService: TokenService) {}
+  constructor(
+    private readonly tokenService: TokenService,
+    private readonly proxy: ClientProxyMicroservice,
+  ) {}
+
+  private clientSeguridad = this.proxy.clientProxySeguridad();
 
   @Post()
-  create(@Body() createTokenDto: CreateTokenDto) {
-    return this.tokenService.create(createTokenDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.tokenService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.tokenService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTokenDto: UpdateTokenDto) {
-    return this.tokenService.update(+id, updateTokenDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tokenService.remove(+id);
+  async create(@Body() createTokenDto: CreateTokenDto) {
+    console.log('se recibio la peticion de crear token desde postman');
+    return await lastValueFrom(this.clientSeguridad.send('CREATE_TOKEN', {}));
   }
 }
