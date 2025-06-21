@@ -4,6 +4,7 @@ import { CreateTokenDto } from './dto/create-token.dto';
 import { UpdateTokenDto } from './dto/update-token.dto';
 import { ClientProxyMicroservice } from 'src/helper/proxy/client.proxy';
 import { lastValueFrom } from 'rxjs';
+import { FindTokenDto } from './dto/find-token.dto';
 
 @Controller('token')
 export class TokenController {
@@ -19,8 +20,8 @@ export class TokenController {
     return await lastValueFrom(this.clientSeguridad.send('CREATE_TOKEN', {}));
   }
 
-  @Get()
-  async findByToken(@Body() token: string) {
-    return await lastValueFrom(this.clientSeguridad.send('FIND_TOKEN', token));
+  @Post('find')
+  async findByToken(@Body() body: FindTokenDto) {
+    return await lastValueFrom(this.clientSeguridad.send('FIND_TOKEN', { token: body.token }));
   }
 }
