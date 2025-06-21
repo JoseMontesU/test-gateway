@@ -16,7 +16,11 @@ export class TokenController {
 
   @Post()
   async create(@Body() createTokenDto: CreateTokenDto) {
-    console.log('se recibio la peticion de crear token desde postman');
     return await lastValueFrom(this.clientSeguridad.send('CREATE_TOKEN', {}));
+  }
+
+  @Get()
+  async findByToken(@Body() token: string) {
+    return await lastValueFrom(this.clientSeguridad.send('FIND_TOKEN', token));
   }
 }
