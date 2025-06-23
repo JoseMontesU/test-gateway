@@ -32,4 +32,7 @@ export class CreateClienteDto {
 
     @IsNotEmpty()
     bono_bienvenida: number;
+
+    @IsNotEmpty()
+    token: string;
 }
