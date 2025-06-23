@@ -3,11 +3,15 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProxyModule } from './helper/proxy/proxy.module';
 import { TokenModule } from './services/token/token.module';
+import { ParametrosModule } from './services/parametros/parametros.module';
+import { CorreosModule } from './services/correos/correos.module';
+import { ClientesModule } from './services/clientes/clientes.module';
 
 @Module({
   imports: [
     ProxyModule,
-    TokenModule
+    TokenModule,
+    ClientesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
