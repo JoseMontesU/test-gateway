@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { lastValueFrom } from 'rxjs';
 import { ClientProxyMicroservice } from 'src/helper/proxy/client.proxy';
+import { LoginClienteDto } from './dto/login-cliente.dto';
 
 @Controller('clientes')
 export class ClientesController {
@@ -11,6 +12,14 @@ export class ClientesController {
 
   private clientClientes = this.proxy.clientProxyClientes();
   private clientSeguridad = this.proxy.clientProxySeguridad();
+
+   @Post('login')
+  async login(@Body() loginDto: LoginClienteDto) {
+    
+    return lastValueFrom(
+      this.clientClientes.send('VALIDATE_CLIENTE', loginDto)
+    );
+  }
 
   @Post()
   async create(@Body() createClienteDto: CreateClienteDto) {

@@ -1,4 +1,6 @@
 import { IsNotEmpty } from "class-validator";
+import { IsAdult } from "./is-adult.decorator";
+
 
 export class CreateClienteDto {
     @IsNotEmpty()
@@ -7,12 +9,14 @@ export class CreateClienteDto {
     @IsNotEmpty()
     numero_documento: string;
 
+
     @IsNotEmpty()
     nombre: string;
     @IsNotEmpty()
     apellido: string;
 
     @IsNotEmpty()
+    @IsAdult({ message: 'Debes ser mayor de 18 años.' })
     fecha_nacimiento: Date;
 
     @IsNotEmpty()

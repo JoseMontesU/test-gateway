@@ -12,23 +12,5 @@ export class CorreosController {
     return this.correosService.create(createCorreoDto);
   }
 
-  @Get()
-  findAll() {
-    return this.correosService.findAll();
-  }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.correosService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCorreoDto: UpdateCorreoDto) {
-    return this.correosService.update(+id, updateCorreoDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.correosService.remove(+id);
-  }
 }
